@@ -13,7 +13,7 @@ public class Health : Pickups
     [SerializeField, Tooltip("Raised when object dies")]
     private UnityEvent onDie;
     [SerializeField, Tooltip("Seconds to ragdoll for")]
-    private int ragTimer = 10;
+    private int ragTimer = 5;
 
     [SerializeField, Tooltip("Current Health")]
     public float health;
@@ -37,7 +37,6 @@ public class Health : Pickups
     // Update is called once per frame
     public override void Update()
     {
-        //while button down, attack bool true, collider enabled.
         percent = health / maxHealth;
         base.Update();
     }
@@ -50,14 +49,13 @@ public class Health : Pickups
         if (damage > health)//if damage is greater than current health
         {
             overKill = damage - health;//get the amount of overkill damage
+            health = Mathf.Clamp(health - damage, 0f, health);//subtract damage from health, making sure not to subtract more than current health value
         }
         else//damage not more than current health
         {
             overKill = 0;//output 0
             health = Mathf.Clamp(health - damage, 0f, health);//subtract damage from health, making sure not to subtract more than current health value
         }
-        Debug.Log("Damage done, new health value....");
-        Debug.Log(health);
         SendMessage("OnDamage", SendMessageOptions.DontRequireReceiver);
         onDamage.Invoke();
 
@@ -65,7 +63,6 @@ public class Health : Pickups
         {
             SendMessage("onDie", SendMessageOptions.DontRequireReceiver);//tell every object this is attched to to look for its onDie method -dont error if none
             onDie.Invoke();//call onDie
-            Debug.Log("OnDie Message Sent");
         }
     }
 
@@ -91,10 +88,8 @@ public class Health : Pickups
 
     public void Death()
     {
-        
         //aud.PlayOneShot(deathNoise) ;//play death sound
         GameObject.Destroy(this.gameObject, ragTimer);//destroy game object after set seconds seconds
-       
     }
     
 

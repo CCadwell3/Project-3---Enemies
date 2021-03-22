@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8a8fd45f4e7a84bad4c8cc4af8bbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 25
+  isAttacking: 0
+  weaponDamage: 10
   projectilePrefab: {fileID: 1040845234977951405, guid: 39372c6f04e98d249b20eb37c49a14db, type: 3}
   projectileSpeed: 25
   thrown: {fileID: 0}
@@ -218,10 +219,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7779820092991123984}
-  m_LocalRotation: {x: 0.13878202, y: 0.34214893, z: 0.2140685, w: 0.9043497}
+  m_LocalRotation: {x: -0.7310863, y: 0.16102259, z: -0.25024337, w: 0.613973}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4621996970938666507}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 6, y: 43, z: 29}
+  m_LocalEulerAnglesHint: {x: -54.8, y: 102.1, z: -109.69}

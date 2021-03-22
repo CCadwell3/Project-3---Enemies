@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
 
@@ -25,7 +23,6 @@ public class Pawn : MonoBehaviour
         anim = GetComponent<Animator>();//get the animator
         rbpawn = GetComponent<Rigidbody>();//get rigidbody component
     }
-
     // Update is called once per frame
     public virtual void Update()
     {
@@ -35,7 +32,6 @@ public class Pawn : MonoBehaviour
     {
 
     }
-
     public virtual void RotateTowards(Vector3 targetPoint)
     {
 
@@ -44,7 +40,6 @@ public class Pawn : MonoBehaviour
     {
 
     }
-
     public virtual void EquipWeapon(Weapons weaponToEquip)
     {
         
@@ -78,7 +73,6 @@ public class Pawn : MonoBehaviour
         } 
 
     }
-
 
     public void RagOn()
     {
@@ -132,8 +126,7 @@ public class Pawn : MonoBehaviour
         foreach (Rigidbody rigidbody in rbs)
         {
             rigidbody.isKinematic = true;
-        }
-
+        }  
         mainBody.isKinematic = false;//turn on physics for main rigidbody
         mainCol.enabled = true;//turn on main collider
         anim.enabled = true;//enable animations

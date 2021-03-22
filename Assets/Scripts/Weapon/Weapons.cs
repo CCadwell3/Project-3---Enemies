@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public abstract class Weapons : MonoBehaviour
 {
 
-    private bool isAttacking = false;//tracker for weather or not to inflict damage
+    public bool isAttacking = false;//tracker for weather or not to inflict damage
 
     [Header("Damage")]
     public float weaponDamage = 100;
@@ -34,8 +34,6 @@ public abstract class Weapons : MonoBehaviour
     public GameObject owner;
     public Transform origin;
     
-    
-    
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -43,7 +41,6 @@ public abstract class Weapons : MonoBehaviour
         pawn = transform.root.GetComponent<Pawn>();//get the root pawn
         owner = transform.root.gameObject;
         origin = owner.transform.Find("FirePoint");
-
     }
 
     // Update is called once per frame
@@ -53,13 +50,13 @@ public abstract class Weapons : MonoBehaviour
     }
     public virtual void MainAttackDown()
     {
+        isAttacking = true;//attacking
         OnMainAttackDown.Invoke();
-        isAttacking = true;
     }
     public virtual void MainAttackUp()
     {
+        isAttacking = false;//not attacking
         OnMainAttackUp.Invoke();
-        isAttacking = false;
     }
     public virtual void AltAttackDown()
     {
@@ -76,7 +73,6 @@ public abstract class Weapons : MonoBehaviour
         if (!pawn.anim.GetBool("LongSwordAttack"))//if not attacking
         {
             pawn.anim.SetBool("LongSwordAttack", true);//play attack animation
-            isAttacking = true;
         }
     }
     public virtual void LongSwordAttackEnd()
@@ -84,7 +80,6 @@ public abstract class Weapons : MonoBehaviour
         if (pawn.anim.GetBool("LongSwordAttack"))//if attacking
         {
             pawn.anim.SetBool("LongSwordAttack", false);//stop attack animation
-            isAttacking = false;
         }
         else
         {
@@ -111,7 +106,6 @@ public abstract class Weapons : MonoBehaviour
         if (!pawn.anim.GetBool("DaggerAttack"))//if not attacking
         {
             pawn.anim.SetBool("DaggerAttack", true);//play attack animation
-            isAttacking = true;
         }
     }
     public virtual void DaggerAttackEnd()
@@ -119,7 +113,6 @@ public abstract class Weapons : MonoBehaviour
         if (pawn.anim.GetBool("DaggerAttack"))//if attacking
         {
             pawn.anim.SetBool("DaggerAttack", false);//stop attack animation
-            isAttacking = false;
         }
     }
     public virtual void DaggerAltStart()
@@ -156,9 +149,6 @@ public abstract class Weapons : MonoBehaviour
     {
         //nothing -- This fires on attack down
     }
-
-    
-
     public void Throw()
     {
         Ammo thrown = Instantiate(projectilePrefab, origin.position, origin.rotation, origin) as Ammo;//create projectile object
@@ -166,7 +156,6 @@ public abstract class Weapons : MonoBehaviour
         thrown.gameObject.layer = gameObject.layer;//assign thrown object to parent objecst layer
         thrown.from = origin;
     }
-
 
     //collision events
     public virtual void OnCollisionEnter(Collision collision)
@@ -181,9 +170,9 @@ public abstract class Weapons : MonoBehaviour
             {
                 Pawn hitTarget = thingWeHit.GetComponent<Pawn>();//set the target to the the thing we hit
 
-                if (hitTarget.transform.root.GetComponent<Health>())//if target has a health component
+                if (hitTarget.transform.root.GetComponent<Health>())//if target has more than 0 health
                 {
-                    Health health = hitTarget.transform.root.GetComponent<Health>();//reference for health component of object we are hitting
+                    Health health = thingWeHit.transform.root.GetComponent<Health>();//reference for health component of object we are hitting
                     health.Damage(weaponDamage);//call objects damage function, give it the weapon damage of equipped weapon
                 }
                

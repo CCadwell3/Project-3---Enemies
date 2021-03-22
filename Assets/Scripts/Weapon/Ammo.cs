@@ -23,7 +23,6 @@ public class Ammo : Weapons
     // Update is called once per frame
     public override void Update()
     {
-        
         base.Update();
     }
 
@@ -36,12 +35,7 @@ public class Ammo : Weapons
         {
             collidedWithHealth.Damage(projectileDamage);//send projectile damage to other objects damage function
         }
-        
-        
-
-        Destroy(gameObject);//destroy projectile
-
-       
+        Destroy(gameObject);//destroy projectile 
     }
     
     

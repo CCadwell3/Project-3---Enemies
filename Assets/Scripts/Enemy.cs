@@ -31,16 +31,16 @@ public class Enemy : Pawn
     {
         rbpawn = GetComponent<Rigidbody>();//get rigidbody
         grounded = true;//set grounded to true (say we are on the ground)
+        RagOff();//turn off ragdoll
         int selection = Random.Range(0, (StartingWeapons.Length - 1));//generate random number up to weapons length
         EquipWeapon(StartingWeapons[selection]);//use random number to assign a weapon to enemy
-        base.Awake();
+        
     }
     public override void Start()
     {
         
         base.Start();
     }
-
     public override void Update()
     {
         base.Update();
@@ -69,7 +69,6 @@ public class Enemy : Pawn
             rbpawn.velocity = new Vector3(moveDirection.x, jumpForce, moveDirection.z);//add y axis jumpforce to current movement
         }
     }
-
     public override void EquipWeapon(Weapons weaponToEquip)
     {
         if (!equippedWeapon)
@@ -85,15 +84,12 @@ public class Enemy : Pawn
             Destroy(equippedWeapon.gameObject);//get rid of old weapon
             equippedWeapon = Instantiate(weaponToEquip) as Weapons;//spawn weapon
             equippedWeapon.transform.parent = weaponContainer;//parent weapon to container (hold position)
+            equippedWeapon.gameObject.layer = gameObject.layer;//set weapon container as weapons parent
             equippedWeapon.transform.localPosition = weaponToEquip.transform.localPosition;//position weapon
             equippedWeapon.transform.localRotation = weaponToEquip.transform.localRotation;//rotate weapon
         }
-
-
-
         base.EquipWeapon(weaponToEquip);
     }
-
     //collision detection (right now to check if we are on the ground or not)
     private void OnCollisionEnter(Collision collision)
     {
@@ -103,7 +99,4 @@ public class Enemy : Pawn
             grounded = true;//set flag to true
         }
     }
-
-
-
 }

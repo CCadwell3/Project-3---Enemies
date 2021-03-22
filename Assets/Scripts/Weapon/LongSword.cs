@@ -29,7 +29,6 @@ public class LongSword : Weapons
 
     public override void AltAttackDown()
     {
-        Debug.Log("Alt down sent up the chain");
         base.AltAttackDown();
     }
 
